@@ -6,48 +6,80 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { AsgardWarpTransition } from '@/components/AsgardWarpTransition';
 import { QuantumPortalSVG } from '@/components/QuantumPortal';
-import {
-  InfinityGauntletSVG,
-  SpiderManFigureSVG,
-  IronManFigureSVG,
-  WolverineFigureSVG,
-  CapFigureSVG,
-  ThorFigureSVG,
-  HulkFigureSVG,
-  DaredevilFigureSVG,
-  ScarletWitchFigureSVG,
-  BlackPantherFigureSVG,
-  DoctorStrangeFigureSVG,
-  WebShooterSVG,
-  ArcReactorSVG,
-  WolverineClawsSVG,
-  CapShieldSVG,
-  StormbreakerSVG,
-  GammaGauntletSVG,
-  BillyClubsSVG,
-  ChaosHexSVG,
-  VibraniumNecklaceSVG,
-  TaoMandalaSVG,
-  CharacterMomentOverlay
-} from '@/components/MarvelAssets';
+import { CharacterMomentOverlay } from '@/components/MarvelAssets';
 
 gsap.registerPlugin(ScrollTrigger);
+
+// ============================================================================
+// GAME / QUIZ QR LINK (Update this URL anytime and the QR updates automatically!)
+// ============================================================================
+const GAME_QR_LINK = "https://wayground.com/admin/quiz/62d98b5d389657001e0ea7de/daily-check-in?lng=en";
+
+// Helper function to generate a high-contrast QR code dynamically from any link
+const getDynamicQrUrl = (link: string, colorHex: string = "00f5d4", bgHex: string = "090d16") => {
+  const cleanColor = colorHex.replace('#', '');
+  const cleanBg = bgHex.replace('#', '');
+  return `https://api.qrserver.com/v1/create-qr-code/?size=320x320&data=${encodeURIComponent(
+    link
+  )}&color=${cleanColor}&bgcolor=${cleanBg}&margin=10`;
+};
+
+// 4-Slide Presentation Deck for Absenteeism & Overtime
+const ABSENTEEISM_PPT_SLIDES = [
+  {
+    title: "Maintenance Spend System Gaps",
+    subtitle: "Volvo Group Plant Efficiency Analysis",
+    contentLeftHeading: "How cost lands today",
+    contentLeftText: "Spares are not treated as Inventory, posted against cost center. Manual excel data maintained for inventory.\n\nContractors and AMCs post to cost-center GLs through service POs.\n\nIn-house technicians sit in department payroll.",
+    contentRightHeading: "What we cannot answer",
+    contentRightText: "• Which machines and lines consume the most?\n• How much is breakdown versus planned work?\n• Should we repair or replace this asset?\n• Is the spend buying us uptime?",
+    footer: "Result: Two cost-center total a month, with no machine, no reason and no trend behind it."
+  },
+  {
+    title: "Absenteeism & Overtime Impact",
+    subtitle: "Conversion Cost and BC Hours per Truck",
+    contentLeftHeading: "The Challenge",
+    contentLeftText: "Unplanned absenteeism creates line imbalances, forcing overtime hours and driving up direct conversion costs per manufactured truck.",
+    contentRightHeading: "The Solution & Insights",
+    contentRightText: "• Analyzed labor efficiency and productivity variations across shifts.\n• Highlighted optimal staffing thresholds and cost optimization opportunities.\n• Integrated live Power BI metrics for shift supervisors.",
+    footer: "Impact: Actionable labor planning resulting in reduced conversion overhead."
+  },
+  {
+    title: "Data-Driven Cost Saving Framework",
+    subtitle: "Financial & Operational Tracking",
+    contentLeftHeading: "Data Architecture",
+    contentLeftText: "Processed plant attendance, shift logs, and production output datasets using Python (Pandas/NumPy) and SQL pipelines.",
+    contentRightHeading: "Key Deliverables",
+    contentRightText: "• Automated absenteeism tracking reports.\n• Material availability correlation with labor bottlenecks.\n• Executive dashboards for plant leadership.",
+    footer: "Outcome: Enhanced workforce visibility and streamlined cost control."
+  },
+  {
+    title: "Leadership & Enterprise Execution",
+    subtitle: "Operational Excellence at Volvo Bangalore",
+    contentLeftHeading: "Core Focus",
+    contentLeftText: "Bridging data analytics with shop-floor execution to improve overall equipment effectiveness (OEE) and labor productivity.",
+    contentRightHeading: "Tech Stack Deployed",
+    contentRightText: "• Python & SQL Analytics\n• Power BI Dashboards\n• Process Optimization",
+    footer: "Summary: Driving sustainable plant efficiency and smart manufacturing insights."
+  }
+];
 
 const MILESTONES = [
   {
     id: 'hero-spiderman',
     progress: 0.08,
     align: 'left' as const,
-    timestamp: 'Work Experience',
-    name: 'SPIDER-MAN',
-    role: 'GAT Volvo Group, Bangalore',
+    timestamp: 'Activity 1',
+    name: 'Absenteeism & Overtime',
+    role: 'Impact on Conversion Cost and BC Hours per Truck',
     themeColor: '#f72585',
     glowColor: 'rgba(247, 37, 133, 0.65)',
-    desc: 'Understanding Business building clean projects, increasing efficiency for the plant, cost saving with data, Automating Guest Flow.',
-    tags: ['PowerAutomate', 'PowerBI', 'Python', 'Power Apps'],
+    desc: 'Analyzes the impact of absenteeism and overtime on conversion costs and BC hours per truck, highlighting labor efficiency, productivity variations, and cost optimization opportunities.',
+    tags: ['Absenteeism Report', 'Material Availability'],
     projectUrl: 'https://github.com/Vishal-Vishwakarma',
-    Figure: SpiderManFigureSVG,
-    Weapon: WebShooterSVG
+    imagePath: '/images/4x2.png',
+    subImagePath: '/images/Container 4x2.png',
+    isPresentation: true
   },
   {
     id: 'hero-ironman',
@@ -61,8 +93,9 @@ const MILESTONES = [
     desc: 'Built and orchestrated agentic workflows using LangChain for real-time data retrieval and business logic execution.',
     tags: ['Python', 'MySQL', 'NLP', 'LangChain'],
     projectUrl: 'https://github.com/Vishal-Vishwakarma',
-    Figure: IronManFigureSVG,
-    Weapon: ArcReactorSVG
+    imagePath: '/images/6x4.png',
+    subImagePath: '/images/Vessel carrier 6x4.png',
+    isPresentation: false
   },
   {
     id: 'hero-wolverine',
@@ -76,8 +109,9 @@ const MILESTONES = [
     desc: 'Developed a hardware tracking application to manage IT inventory, employee allocations, and equipment transfers. Designed a PostgreSQL-based backend to improve data reliability and enable dynamic Excel report generation for efficient management reporting.',
     tags: ['React (Next.js)', 'FastAPI', 'Python', 'Supabase', 'Tailwind CSS', 'Pandas'],
     projectUrl: 'https://roova-platform-web-dusky.vercel.app/',
-    Figure: WolverineFigureSVG,
-    Weapon: WolverineClawsSVG
+    imagePath: '/images/8x4.png',
+    subImagePath: '/images/Mining 8x4.png',
+    isPresentation: false
   },
   {
     id: 'hero-cap',
@@ -91,8 +125,9 @@ const MILESTONES = [
     desc: 'Developed a SaaS platform for salons and spas with online booking, Google authentication, and admin/shop owner dashboards. Managed multiple shops through a centralized service platform.',
     tags: ['Python', 'Next.js', 'SWR', 'PostgreSQL', 'React'],
     projectUrl: 'https://roova-platform-web-dusky.vercel.app/',
-    Figure: CapFigureSVG,
-    Weapon: CapShieldSVG
+    imagePath: '/images/10x4.png',
+    subImagePath: '/images/10x4 offroad.png',
+    isPresentation: false
   },
   {
     id: 'hero-thor',
@@ -106,8 +141,9 @@ const MILESTONES = [
     desc: 'Developed a Cafeteria system in which employees use their Access card tap on machine and get the standard lunch. Works on tokens where every tap deducts 1 token from their balance.',
     tags: ['Python', 'PostgreSQL', 'Vercel', 'Node.js', 'TypeScript', 'Next.js', 'FastAPI'],
     projectUrl: 'https://cafeteria-eta-gilt.vercel.app/',
-    Figure: ThorFigureSVG,
-    Weapon: StormbreakerSVG
+    imagePath: '/images/Glossy Red.png',
+    subImagePath: '/images/Glossy Red Haul.png',
+    isPresentation: false
   },
   {
     id: 'hero-hulk',
@@ -121,8 +157,9 @@ const MILESTONES = [
     desc: 'Developed a real-time tracking application where operators tap a digital factory blueprint to log precise forklift coordinates and task events (Start, Arrive, Load, Deliver), synchronizing data into a live dashboard.',
     tags: ['Python', 'Streamlit', 'Supabase', 'PostgreSQL', 'Pandas', 'Pillow'],
     projectUrl: 'https://forklift-optimization.streamlit.app/',
-    Figure: HulkFigureSVG,
-    Weapon: GammaGauntletSVG
+    imagePath: '/images/Volvo Style Heavy.png',
+    subImagePath: '/images/Volvo Heavy .png',
+    isPresentation: false
   },
   {
     id: 'hero-daredevil',
@@ -131,13 +168,14 @@ const MILESTONES = [
     timestamp: 'Project 5',
     name: 'DAREDEVIL',
     role: 'Logi-gen',
-    themeColor: '#d90429',
-    glowColor: 'rgba(217, 4, 41, 0.65)',
+    themeColor: '#16782e',
+    glowColor: 'rgba(25, 147, 65, 0.55)',
     desc: 'Developed an Agentic AI tool that allows users to query logistics and delivery data using natural language, directly addressing ecommerce and logistics challenges. Integrated LLMs to deconstruct complex queries into executable SQL.',
     tags: ['Python', 'SQL', 'Gemini Model', 'LangChain'],
     projectUrl: 'https://logi-gen-zkekgodblyh2hgyjcay3oj.streamlit.app/',
-    Figure: DaredevilFigureSVG,
-    Weapon: BillyClubsSVG
+    imagePath: '/images/Electric Truck.png',
+    subImagePath: '/images/Charger.png',
+    isPresentation: false
   },
   {
     id: 'hero-scarletwitch',
@@ -146,13 +184,14 @@ const MILESTONES = [
     timestamp: 'Project 6',
     name: 'SCARLET WITCH',
     role: 'ARU Fish Stall | Full-Stack E-commerce Platform',
-    themeColor: '#e01e37',
-    glowColor: 'rgba(224, 30, 55, 0.7)',
+    themeColor: '#a6b5bc',
+    glowColor: 'rgba(108, 125, 129, 0.7)',
     desc: 'Developed a localized e-commerce web application for real-time inventory management and secure ordering. Integrated live GPS capture and Google Maps API to calculate driving routes, enforcing strict 5 km delivery boundaries.',
     tags: ['Python', 'Streamlit', 'Supabase (PostgreSQL)', 'Google Maps API'],
     projectUrl: 'https://aru-fish-stall.streamlit.app/',
-    Figure: ScarletWitchFigureSVG,
-    Weapon: ChaosHexSVG
+    imagePath: '/images/Volvo Iron.png',
+    subImagePath: '/images/SpeedoMeter.png',
+    isPresentation: false
   },
   {
     id: 'hero-blackpanther',
@@ -161,13 +200,14 @@ const MILESTONES = [
     timestamp: 'Project 7',
     name: 'BLACK PANTHER',
     role: 'Med-sim.ai',
-    themeColor: '#9d4edd',
-    glowColor: 'rgba(157, 78, 221, 0.65)',
+    themeColor: '#665c6e',
+    glowColor: 'rgba(209, 204, 214, 0.65)',
     desc: 'Developed a virtual patient simulator using Python-based LLMs and ML to enable realistic medical training. Features AI-generated symptom profiles and differential diagnosis via decision trees.',
     tags: ['LLMs', 'ML', 'Python'],
     projectUrl: 'https://github.com/Abhigyan126/MedSim-AI',
-    Figure: BlackPantherFigureSVG,
-    Weapon: VibraniumNecklaceSVG
+    imagePath: '/images/4x2.png',
+    subImagePath: '/images/Container 4x2.png',
+    isPresentation: false
   },
   {
     id: 'hero-doctorstrange',
@@ -181,52 +221,60 @@ const MILESTONES = [
     desc: 'SafeSearch is a mobile-first web app that lets users scan product ingredient lists using their phone camera. Uses AI to analyze the photo, identify chemicals, and provide an instant 1-10 safety rating.',
     tags: ['GenAI / LLMs', 'LangChain', 'Prompt Architecture'],
     projectUrl: 'https://safesearch-rose.vercel.app/',
-    Figure: DoctorStrangeFigureSVG,
-    Weapon: TaoMandalaSVG
+    imagePath: '/images/6x4.png',
+    subImagePath: '/images/Vessel carrier 6x4.png',
+    isPresentation: false
   }
 ];
 
 export default function MarvelBifrostPortfolio() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const pptModalRef = useRef<HTMLDivElement>(null);
 
-  const [hasSnapped, setHasSnapped] = useState(false);
-  const [isSnapping, setIsSnapping] = useState(false);
   const [activeHeroMoment, setActiveHeroMoment] = useState<string | null>(null);
   const [isWarpingToAsgard, setIsWarpingToAsgard] = useState(false);
+  const [isAppFullscreen, setIsAppFullscreen] = useState(false);
 
-  const triggerSnapSound = () => {
-    try {
-      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      const ctx = new AudioCtx();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
+  // Single Game QR Link State (Initialized from GAME_QR_LINK constant)
+  const [gameQrLink, setGameQrLink] = useState(GAME_QR_LINK);
+  const [showGameQrModal, setShowGameQrModal] = useState(false);
 
-      osc.type = 'sawtooth';
-      osc.frequency.setValueAtTime(340, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(32, ctx.currentTime + 0.6);
+  // PPT Modal State
+  const [showPptModal, setShowPptModal] = useState(false);
+  const [pptSlideIndex, setPptSlideIndex] = useState(0);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
-      gain.gain.setValueAtTime(0.85, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.6);
-
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start();
-      osc.stop(ctx.currentTime + 0.6);
-    } catch {}
+  // Toggle Fullscreen on the root documentElement so window scrolling continues to work smoothly
+  const toggleAppFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(() => {});
+    } else {
+      document.exitFullscreen().catch(() => {});
+    }
   };
 
-  const handleThanosSnap = () => {
-    if (hasSnapped || isSnapping) return;
-    setIsSnapping(true);
-    triggerSnapSound();
-
-    setTimeout(() => {
-      setHasSnapped(true);
-      setIsSnapping(false);
-      window.scrollTo({ top: 160, behavior: 'smooth' });
-    }, 850);
+  // Toggle Fullscreen specifically for the PPT Modal
+  const toggleFullscreen = () => {
+    if (!pptModalRef.current) return;
+    if (!document.fullscreenElement) {
+      pptModalRef.current.requestFullscreen().catch(() => {});
+    } else {
+      document.exitFullscreen().catch(() => {});
+    }
   };
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      const isFs = Boolean(document.fullscreenElement);
+      setIsAppFullscreen(isFs && document.fullscreenElement === document.documentElement);
+      setIsFullscreen(isFs && document.fullscreenElement === pptModalRef.current);
+      setTimeout(() => ScrollTrigger.refresh(), 100);
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
 
   useEffect(() => {
     if (!canvasRef.current || !containerRef.current) return;
@@ -293,6 +341,32 @@ export default function MarvelBifrostPortfolio() {
     }
     scene.add(linesGroup);
 
+    // =========================================================================
+    // 3D TEAL SEMI TRUCK
+    // =========================================================================
+    const truckPivot = new THREE.Group();
+    scene.add(truckPivot);
+
+    const roadGlowLight = new THREE.PointLight(0xff007f, 4.5, 14, 1.8);
+    roadGlowLight.position.set(0, 0.6, 0);
+    truckPivot.add(roadGlowLight);
+
+    const textureLoader = new THREE.TextureLoader();
+    const truckTexture = textureLoader.load('/teal-truck.png');
+    truckTexture.colorSpace = THREE.SRGBColorSpace;
+
+    const truckGeo = new THREE.PlaneGeometry(6.5, 3.8);
+    const truckMat = new THREE.MeshBasicMaterial({
+      map: truckTexture,
+      transparent: true,
+      alphaTest: 0.05,
+      side: THREE.DoubleSide
+    });
+    const truckMesh = new THREE.Mesh(truckGeo, truckMat);
+    truckMesh.position.y = 1.9;
+    truckMesh.rotation.y = Math.PI; // Face rear toward camera
+    truckPivot.add(truckMesh);
+
     const starCount = 2200;
     const starCoords = new Float32Array(starCount * 3);
     for (let i = 0; i < starCount; i++) {
@@ -322,13 +396,13 @@ export default function MarvelBifrostPortfolio() {
 
     const poleMaterial = new THREE.LineBasicMaterial({ color: 0xff007f, transparent: true, opacity: 0.6 });
 
-    const cardAnchors = MILESTONES.map(m => {
+    const cardAnchors = MILESTONES.map((m, idx) => {
       const pt = bifrostCurve.getPointAt(m.progress);
-      const xOffCard = m.align === 'left' ? -6.8 : 6.8;
-      const xOffMon = m.align === 'left' ? 7.2 : -7.2;
+      const xOffCard = m.align === 'left' ? -7.8 : 7.8;
+      const xOffMon = m.align === 'left' ? 7.8 : -7.8;
 
-      const cardPos = new THREE.Vector3(pt.x + xOffCard, pt.y + 2.2, pt.z);
-      const monPos = new THREE.Vector3(pt.x + xOffMon, pt.y + 2.6, pt.z);
+      const cardPos = new THREE.Vector3(pt.x + xOffCard, pt.y + 2.3, pt.z);
+      const monPos = new THREE.Vector3(pt.x + xOffMon, pt.y + 2.5, pt.z);
 
       const poleGeo = new THREE.BufferGeometry().setFromPoints([
         new THREE.Vector3(cardPos.x, pt.y - 1.8, cardPos.z),
@@ -340,7 +414,8 @@ export default function MarvelBifrostPortfolio() {
         id: m.id,
         monumentId: `monument-${m.id}`,
         pos: cardPos,
-        monumentPos: monPos
+        monumentPos: monPos,
+        phase: idx * 0.9
       };
     });
 
@@ -361,12 +436,23 @@ export default function MarvelBifrostPortfolio() {
 
     const animate = () => {
       animId = requestAnimationFrame(animate);
+      const time = performance.now() * 0.0022;
 
       const camPos = bifrostCurve.getPointAt(scrollTracker.progress);
       const lookPos = bifrostCurve.getPointAt(Math.min(scrollTracker.progress + 0.035, 1.0));
 
       camera.position.set(camPos.x, camPos.y + 0.85, camPos.z);
       camera.lookAt(lookPos);
+
+      const truckT = Math.min(scrollTracker.progress + 0.012, 0.995);
+      const truckPos = bifrostCurve.getPointAt(truckT);
+      const forwardTangent = bifrostCurve.getTangentAt(truckT).normalize();
+      const roadGroundLevel = truckPos.y - 1.76;
+
+      truckPivot.position.set(truckPos.x, roadGroundLevel, truckPos.z);
+      const lookTarget = truckPos.clone().add(forwardTangent);
+      lookTarget.y = roadGroundLevel;
+      truckPivot.lookAt(lookTarget);
 
       gantryAnchors.forEach(g => {
         const el = document.getElementById(g.id);
@@ -400,6 +486,8 @@ export default function MarvelBifrostPortfolio() {
 
         if (cardEl) {
           projVec.copy(anchor.pos);
+          projVec.y += Math.sin(time + anchor.phase) * 0.14;
+          projVec.x += Math.cos(time * 0.8 + anchor.phase) * 0.08;
           projVec.project(camera);
           const dist = camera.position.distanceTo(anchor.pos);
           const inFront = projVec.z < 1.0 && anchor.pos.z < camera.position.z;
@@ -423,6 +511,8 @@ export default function MarvelBifrostPortfolio() {
 
         if (monEl) {
           projVec.copy(anchor.monumentPos);
+          projVec.y += Math.cos(time + anchor.phase) * 0.18;
+          projVec.x -= Math.sin(time * 0.8 + anchor.phase) * 0.08;
           projVec.project(camera);
           const dist = camera.position.distanceTo(anchor.monumentPos);
           const inFront = projVec.z < 1.0 && anchor.monumentPos.z < camera.position.z;
@@ -453,6 +543,7 @@ export default function MarvelBifrostPortfolio() {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
+      ScrollTrigger.refresh();
     };
     window.addEventListener('resize', handleResize);
 
@@ -468,53 +559,28 @@ export default function MarvelBifrostPortfolio() {
     <main className="relative w-full min-h-screen bg-[#02000a] text-white selection:bg-[#ff0055] font-sans overflow-x-hidden">
       <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full z-0 pointer-events-none" />
 
-      {/* Top Cockpit HUD */}
+      {/* Top Cockpit HUD with Fullscreen Presentation Button */}
       <header className="fixed top-6 left-6 right-6 z-30 flex items-center justify-between border border-pink-500/30 bg-black/75 backdrop-blur-md px-6 py-3 rounded-md shadow-[0_0_25px_rgba(255,0,127,0.25)]">
         <div className="flex items-center space-x-3">
           <div className="w-3 h-3 rounded-full bg-pink-500 animate-ping" />
           <span className="font-mono font-bold tracking-widest text-sm text-pink-400">
-            Vishal Vishwakarma Portfolio
+            Live
           </span>
         </div>
-        <div className="text-xs font-mono tracking-widest text-purple-300/90 animate-pulse hidden md:block">
-          {hasSnapped ? 'SCROLL DOWN TO WARP THROUGH THE TIMELINE ▼' : 'SNAP THE GAUNTLET TO COMMENCE ▼'}
+
+        <div className="flex items-center space-x-4">
+          <div className="text-xs font-mono tracking-widest text-purple-300/90 animate-pulse hidden md:block">
+            SCROLL DOWN TO WARP THROUGH THE TIMELINE ▼
+          </div>
+
+          <button
+            onClick={toggleAppFullscreen}
+            className="px-3.5 py-1.5 rounded bg-pink-500/20 hover:bg-pink-500/40 border border-pink-500/50 text-xs font-mono font-bold text-pink-300 transition-all cursor-pointer flex items-center space-x-1 shadow-md"
+          >
+            <span>{isAppFullscreen ? '✕ EXIT FULLSCREEN' : '🗖 FULL SCREEN EXPERIENCE'}</span>
+          </button>
         </div>
       </header>
-
-      {/* THANOS INFINITY GAUNTLET LAUNCH GATE */}
-      {!hasSnapped && (
-        <div className="fixed inset-0 z-40 flex flex-col items-center justify-center bg-black/85 backdrop-blur-xl px-4 text-center">
-          <div className="max-w-xl flex flex-col items-center">
-            <span className="text-xs font-mono tracking-[0.3em] text-yellow-400 uppercase mb-2 animate-pulse">
-              [ REALITY MATRIX LOCKED ]
-            </span>
-            <h1 className="text-4xl md:text-5xl font-black font-mono tracking-wider text-white mb-6">
-              A SINGLE SNAP RESHAPES THE UNIVERSE
-            </h1>
-
-            <InfinityGauntletSVG onClick={handleThanosSnap} className="w-48 h-48 cursor-pointer mb-6" />
-
-            <button
-              onClick={handleThanosSnap}
-              className="px-8 py-3 rounded-full font-mono text-sm font-bold tracking-widest bg-gradient-to-r from-yellow-500 via-amber-400 to-yellow-600 text-black uppercase hover:scale-105 active:scale-95 transition-all shadow-[0_0_40px_rgba(255,215,0,0.6)] cursor-pointer"
-            >
-              ⚡ CLICK GAUNTLET TO SNAP & BEGIN
-            </button>
-            <p className="mt-3 text-xs text-gray-400 font-mono">
-              Click anywhere on the Gauntlet to ignite the Thor: Ragnarok Bifrost highway.
-            </p>
-          </div>
-        </div>
-      )}
-
-      {/* BLINDING COSMIC REALITY SNAP FLASH */}
-      {isSnapping && (
-        <div className="fixed inset-0 z-50 pointer-events-none flex items-center justify-center bg-white animate-ping">
-          <div className="text-5xl font-mono font-black text-black tracking-widest">
-            * SNAP *
-          </div>
-        </div>
-      )}
 
       {/* SCREEN-SPACE 3D PROJECTION LAYER */}
       <div className="fixed top-0 left-0 w-full h-full z-10 pointer-events-none overflow-hidden">
@@ -523,47 +589,83 @@ export default function MarvelBifrostPortfolio() {
           id="gantry-intro"
           className="absolute pointer-events-auto w-[90vw] max-w-[680px] p-6 text-center rounded-xl bg-purple-950/80 border-2 border-pink-500 shadow-[0_0_40px_rgba(255,0,127,0.6)] backdrop-blur-xl"
         >
-          <span className="text-xs font-mono font-bold tracking-[0.3em] text-pink-400 uppercase block mb-1">
-            THEME MARVEL
+          <span className="text-2xs font-mono font-bold tracking-[0.3em] text-pink-400 uppercase block mb-1">
+            Volvo
           </span>
-          <h2 className="text-3xl font-black font-mono tracking-wider text-white">
-            WELCOME TO VISHAL'S PROFILE
+          <h2 className="text-5xl font-black font-mono tracking-wider text-white">
+            Roadshow 2026
           </h2>
-          <p className="text-xs text-purple-200 mt-2 font-mono">
-            Software Development Engineer | AIML Engineer
+          <p className="text-2xs text-purple-200 mt-2 font-mono">
+            By Business Control
           </p>
         </div>
 
-        {/* OVERHEAD ARCHWAY 2 (ACADEMICS & SKILLS) */}
+        {/* OVERHEAD ARCHWAY 2 (GAME / QUIZ QR CHECKPOINT) */}
         <div
           id="gantry-education"
-          className="absolute pointer-events-auto w-[92vw] max-w-[720px] p-6 rounded-xl bg-indigo-950/85 border-2 border-cyan-400 shadow-[0_0_45px_rgba(0,245,212,0.65)] backdrop-blur-xl text-left"
+          className="absolute pointer-events-auto w-[92vw] max-w-[760px] p-8 rounded-2xl bg-indigo-950/90 border-2 border-cyan-400 shadow-[0_0_55px_rgba(0,245,212,0.7)] backdrop-blur-2xl text-left"
         >
-          <div className="flex items-center justify-between border-b border-cyan-500/30 pb-2 mb-3">
+          <div className="flex items-center justify-between border-b border-cyan-500/30 pb-3 mb-5">
             <span className="text-xs font-mono font-bold tracking-[0.25em] text-cyan-400 uppercase">
-              ACADEMIC FOUNDATION & CORE COMPETENCY
+              🎮 INTERACTIVE AUDIENCE CHECKPOINT // LIVE QUIZ GAME
             </span>
-            <span className="text-xs font-mono text-purple-200">2021 – 2025</span>
+            <span className="text-xs font-mono text-pink-400 font-bold animate-pulse">
+              SCAN TO JOIN ↘
+            </span>
           </div>
 
-          <h3 className="text-2xl font-black font-mono text-white mb-0.5">
-            JAIN (DEEMED-TO-BE) UNIVERSITY
-          </h3>
-          <p className="text-sm font-mono text-cyan-300 font-bold mb-3">
-            BTECH - CSE (ARTIFICIAL INTELLIGENCE & MACHINE LEARNING) • CGPA: 8.085
-          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div className="flex-1">
+              <h3 className="text-3xl font-black font-mono text-white mb-2">
+                DAILY CHECK-IN QUIZ CHALLENGE
+              </h3>
+              <p className="text-sm font-mono text-cyan-300 font-bold mb-4">
+                SCAN THE QR CODE WITH YOUR PHONE TO PLAY LIVE!
+              </p>
 
-          <div className="bg-black/50 p-3 rounded-lg border border-white/10 mb-2">
-            <span className="text-[11px] font-mono font-bold text-pink-400 uppercase block mb-1">
-              TECHNICAL EXPERTISE:
-            </span>
-            <p className="text-xs font-mono text-gray-200 leading-relaxed">
-              Python, SQL (MySQL), Power BI, Machine Learning, Artificial Intelligence, Generative AI, LLMs, NLP, TensorFlow, FastAPI, Next.js.
-            </p>
-          </div>
+              <div className="bg-black/55 p-4 rounded-xl border border-white/10 mb-5">
+                <span className="text-[11px] font-mono font-bold text-pink-400 uppercase block mb-1">
+                  GAME ROOM LINK:
+                </span>
+                <p className="text-xs font-mono text-gray-200 break-all leading-relaxed">
+                  {gameQrLink}
+                </p>
+              </div>
 
-          <div className="flex items-center justify-between text-[11px] font-mono text-purple-300">
-            <span>Soft Skills: Leadership, Problem Solving, Work Ethic, Communication</span>
+              <div className="flex flex-wrap gap-3">
+                <a
+                  href={gameQrLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-5 py-2.5 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-black font-mono text-xs font-black uppercase tracking-wider transition-all shadow-lg"
+                >
+                  PLAY GAME DIRECTLY ↗
+                </a>
+
+                <button
+                  onClick={() => setShowGameQrModal(true)}
+                  className="px-5 py-2.5 rounded-lg bg-white/10 hover:bg-white/20 border border-cyan-400/50 text-cyan-300 font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
+                >
+                  🔍 ENLARGE / EDIT QR LINK
+                </button>
+              </div>
+            </div>
+
+            {/* Auto-Updating QR Code Image */}
+            <div
+              onClick={() => setShowGameQrModal(true)}
+              className="shrink-0 flex flex-col items-center p-4 bg-[#090d16] border-2 border-cyan-400 rounded-2xl shadow-[0_0_35px_rgba(0,245,212,0.45)] cursor-pointer hover:scale-105 transition-transform"
+              title="Click to enlarge QR Code for audience"
+            >
+              <img
+                src={getDynamicQrUrl(gameQrLink, '00f5d4', '090d16')}
+                alt="Game Quiz QR Code"
+                className="w-44 h-44 object-contain rounded-lg"
+              />
+              <span className="text-[11px] font-mono font-bold text-cyan-300 uppercase tracking-widest mt-2">
+                📱 TAP TO FULLSCREEN QR
+              </span>
+            </div>
           </div>
         </div>
 
@@ -595,7 +697,6 @@ export default function MarvelBifrostPortfolio() {
             ASGARD OBSERVATORY PORTAL
           </h2>
 
-          {/* Clicking now launches the cinematic Asgard Warp Jump */}
           <QuantumPortalSVG
             onClick={() => setIsWarpingToAsgard(true)}
             label="ENTER ASGARD CONTACT VAULT"
@@ -604,86 +705,98 @@ export default function MarvelBifrostPortfolio() {
 
         {/* 10 SIDE BILLBOARDS & 10 STANDING HERO PEDESTALS */}
         {MILESTONES.map((m) => {
-          const Figure = m.Figure;
-          const Weapon = m.Weapon;
-
           return (
             <React.Fragment key={m.id}>
               {/* SIDE STANDING STATUE / PEDESTAL */}
               <div
                 id={`monument-${m.id}`}
-                className="absolute pointer-events-auto cursor-pointer transition-transform hover:scale-115 duration-300 flex flex-col items-center"
-                onClick={() => setActiveHeroMoment(m.name)}
+                className="absolute z-10 hover:z-50 pointer-events-auto cursor-pointer flex flex-col items-center group"
+                onClick={() => {
+                  if (m.isPresentation) {
+                    setShowPptModal(true);
+                  } else {
+                    setActiveHeroMoment(m.name);
+                  }
+                }}
               >
                 <div
                   style={{ filter: `drop-shadow(0 0 25px ${m.glowColor})` }}
-                  className="flex flex-col items-center p-3 rounded-2xl bg-black/60 border border-white/20 backdrop-blur-md"
+                  className="flex flex-col items-center p-5 rounded-2xl bg-black/85 border-2 border-white/30 backdrop-blur-xl group-hover:scale-110 group-hover:-translate-y-2 transition-transform duration-300"
                 >
-                  <Figure className="w-24 h-28 md:w-28 md:h-32 mb-2" />
-                  <div className="p-2 rounded-full bg-white/10 border border-white/20">
-                    <Weapon className="w-14 h-14" />
-                  </div>
+                  <img
+                    src={m.imagePath}
+                    alt={m.name}
+                    className="w-52 h-32 object-contain mb-3 rounded filter drop-shadow-xl"
+                  />
+                  <img
+                    src={m.subImagePath}
+                    alt={`${m.name} variant`}
+                    className="w-40 h-24 object-contain rounded filter drop-shadow-md opacity-95"
+                  />
                 </div>
               </div>
 
               {/* SIDE BILLBOARD */}
               <div
                 id={m.id}
-                style={{
-                  borderColor: m.themeColor,
-                  boxShadow: `0 0 35px ${m.glowColor}, inset 0 0 15px ${m.glowColor}`
-                }}
-                className="absolute pointer-events-auto rounded-xl p-6 backdrop-blur-2xl bg-black/90 border-2 w-[88vw] max-w-[460px]"
+                className="absolute z-20 hover:z-50 pointer-events-auto w-[90vw] max-w-[640px] group"
               >
-                <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-3">
-                  <span className="text-[11px] font-mono tracking-widest text-gray-400 uppercase">
-                    {m.timestamp}
-                  </span>
-                  <button
-                    onClick={() => setActiveHeroMoment(m.name)}
-                    style={{ color: m.themeColor, borderColor: m.themeColor }}
-                    className="text-[11px] font-mono px-2.5 py-0.5 rounded border border-dashed hover:bg-white/10 transition-colors cursor-pointer"
-                  >
-                    CHARGE ⚡
-                  </button>
-                </div>
-
-                <h2 className="text-xl font-black font-mono text-white leading-tight mb-1">
-                  {m.name}
-                </h2>
-                <h3 className="text-xs font-bold font-mono tracking-wide mb-2" style={{ color: m.themeColor }}>
-                  {m.role}
-                </h3>
-                <p className="text-xs text-gray-300 leading-relaxed mb-4">
-                  {m.desc}
-                </p>
-
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  {m.tags.map((t) => (
-                    <span key={t} className="text-[11px] font-mono px-2 py-0.5 rounded bg-white/5 border border-white/10 text-gray-300">
-                      {t}
+                <div
+                  style={{
+                    borderColor: m.themeColor,
+                    boxShadow: `0 0 45px ${m.glowColor}, inset 0 0 20px ${m.glowColor}`
+                  }}
+                  className="rounded-2xl p-8 backdrop-blur-2xl bg-black/92 border-2 transition-transform duration-300 group-hover:scale-[1.03] group-hover:-translate-y-1.5"
+                >
+                  <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
+                    <span className="text-xs font-mono tracking-widest text-gray-400 uppercase">
+                      {m.timestamp}
                     </span>
-                  ))}
-                </div>
+                  </div>
 
-                <div className="flex flex-col sm:flex-row gap-2">
-                  <a
-                    href={m.projectUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ borderColor: m.themeColor, color: m.themeColor }}
-                    className="flex-1 py-2 rounded text-[11px] font-mono font-bold uppercase tracking-wider text-center border hover:bg-white/10 transition-all flex items-center justify-center space-x-1"
-                  >
-                    <span>VIEW PROJECT ↗</span>
-                  </a>
+                  <h2 className="text-2xl font-black font-mono text-white leading-tight mb-1">
+                    {m.name}
+                  </h2>
+                  <h3 className="text-sm font-bold font-mono tracking-wide mb-3" style={{ color: m.themeColor }}>
+                    {m.role}
+                  </h3>
+                  <p className="text-sm text-gray-300 leading-relaxed mb-6">
+                    {m.desc}
+                  </p>
 
-                  <button
-                    onClick={() => setActiveHeroMoment(m.name)}
-                    style={{ backgroundColor: m.themeColor }}
-                    className="flex-1 py-2 rounded text-[11px] font-mono font-bold text-black uppercase tracking-wider hover:brightness-125 transition-transform active:scale-95 shadow-md"
-                  >
-                    DISCHARGE ARTIFACT
-                  </button>
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {m.tags.map((t) => (
+                      <span key={t} className="text-xs font-mono px-3 py-1 rounded bg-white/5 border border-white/15 text-gray-200">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <a
+                      href={m.projectUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ borderColor: m.themeColor, color: m.themeColor }}
+                      className="flex-1 py-3 rounded text-xs font-mono font-bold uppercase tracking-wider text-center border hover:bg-white/10 transition-all flex items-center justify-center space-x-1"
+                    >
+                      <span>VIEW PROJECT ↗</span>
+                    </a>
+
+                    <button
+                      onClick={() => {
+                        if (m.isPresentation) {
+                          setShowPptModal(true);
+                        } else {
+                          setActiveHeroMoment(m.name);
+                        }
+                      }}
+                      style={{ backgroundColor: m.themeColor }}
+                      className="flex-1 py-3 rounded text-xs font-mono font-bold text-black uppercase tracking-wider hover:brightness-125 transition-transform active:scale-95 shadow-md cursor-pointer"
+                    >
+                      {m.isPresentation ? 'VIEW PPT 📊' : 'DISCHARGE ARTIFACT'}
+                    </button>
+                  </div>
                 </div>
               </div>
             </React.Fragment>
@@ -691,13 +804,188 @@ export default function MarvelBifrostPortfolio() {
         })}
       </div>
 
+      {/* ===================================================================== */}
+      {/* FULLSCREEN GAME QR MODAL (FOR EASY AUDIENCE SCANNING & LIVE LINK EDIT) */}
+      {/* ===================================================================== */}
+      {showGameQrModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/92 backdrop-blur-2xl p-4">
+          <div className="relative w-full max-w-lg bg-[#090d16] border-2 border-cyan-400 rounded-2xl shadow-[0_0_80px_rgba(0,245,212,0.5)] p-8 flex flex-col items-center text-center text-white font-mono">
+            <button
+              onClick={() => setShowGameQrModal(false)}
+              className="absolute top-4 right-4 px-3 py-1.5 rounded bg-white/10 hover:bg-white/20 text-xs text-gray-300 font-bold cursor-pointer"
+            >
+              ✕ CLOSE
+            </button>
+
+            <span className="text-xs text-cyan-400 uppercase tracking-[0.25em] mb-1 font-bold">
+              🎮 LIVE AUDIENCE GAME
+            </span>
+            <h3 className="text-2xl md:text-3xl font-black text-white mb-2">
+              SCAN TO JOIN THE QUIZ
+            </h3>
+            <p className="text-xs text-gray-400 mb-6">
+              Point your phone camera at the QR code below to launch the game immediately.
+            </p>
+
+            <div className="p-5 bg-[#090d16] border-2 border-cyan-400 rounded-2xl shadow-[0_0_40px_rgba(0,245,212,0.3)] mb-6">
+              <img
+                src={getDynamicQrUrl(gameQrLink, '00f5d4', '090d16')}
+                alt="Enlarged Game QR Code"
+                className="w-72 h-72 object-contain rounded-lg"
+              />
+            </div>
+
+            {/* Live URL Editor so you can also paste a new link right in the browser */}
+            <div className="w-full text-left mb-5">
+              <label className="text-[11px] text-cyan-300 uppercase tracking-wider block mb-1.5 font-bold">
+                GAME LINK (UPDATE HERE OR IN CODE):
+              </label>
+              <input
+                type="text"
+                value={gameQrLink}
+                onChange={(e) => setGameQrLink(e.target.value)}
+                className="w-full px-3.5 py-2.5 rounded-lg bg-black/80 border border-cyan-400/60 text-xs text-white focus:outline-none focus:border-cyan-300"
+              />
+            </div>
+
+            <a
+              href={gameQrLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full py-3.5 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-xs font-black text-black uppercase tracking-wider transition-all shadow-lg"
+            >
+              OPEN GAME IN NEW TAB ↗
+            </a>
+          </div>
+        </div>
+      )}
+
+      {/* ===================================================================== */}
+      {/* 4-SLIDE PRESENTATION PPT MODAL (WITH SCALED UP TEXT & FULLSCREEN) */}
+      {/* ===================================================================== */}
+      {showPptModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-2xl p-4 overflow-y-auto">
+          <div
+            ref={pptModalRef}
+            className={`relative w-full ${isFullscreen ? 'max-w-none min-h-screen rounded-none p-12 md:p-20' : 'max-w-6xl rounded-2xl p-8 md:p-12'} bg-[#090d16] border-2 border-[#f72585] shadow-[0_0_90px_rgba(247,37,133,0.7)] flex flex-col justify-between text-white font-mono transition-all duration-300 my-auto`}
+          >
+            
+            {/* Modal Header */}
+            <div className="flex items-center justify-between border-b border-white/10 pb-5 mb-8">
+              <div className="flex items-center space-x-3">
+                <div className="w-4 h-4 rounded-full bg-[#f72585] animate-ping" />
+                <span className="text-sm md:text-base tracking-[0.25em] text-[#f72585] uppercase font-bold">
+                  VOLVO GROUP // EXECUTIVE PRESENTATION (SLIDE {pptSlideIndex + 1} OF {ABSENTEEISM_PPT_SLIDES.length})
+                </span>
+              </div>
+
+              <div className="flex items-center space-x-4">
+                <button
+                  onClick={toggleFullscreen}
+                  className="px-4 py-2 rounded bg-[#f72585]/20 hover:bg-[#f72585]/40 border border-[#f72585]/50 text-xs md:text-sm text-pink-300 font-bold transition-colors cursor-pointer flex items-center space-x-1 shadow-md"
+                >
+                  <span>{isFullscreen ? '✕ EXIT FULLSCREEN' : '🗖 FULLSCREEN ⛶'}</span>
+                </button>
+
+                <button
+                  onClick={() => {
+                    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+                    setShowPptModal(false);
+                    setIsFullscreen(false);
+                  }}
+                  className="px-4 py-2 rounded bg-white/10 hover:bg-white/20 text-xs md:text-sm text-gray-300 font-bold transition-colors cursor-pointer"
+                >
+                  ✕ CLOSE
+                </button>
+              </div>
+            </div>
+
+            {/* Slide Body */}
+            <div className="my-4 flex-1 flex flex-col justify-center">
+              <div>
+                <span className="text-sm md:text-base text-cyan-400 tracking-widest uppercase block mb-2 font-bold">
+                  {ABSENTEEISM_PPT_SLIDES[pptSlideIndex].subtitle}
+                </span>
+                <h3 className="text-3xl md:text-5xl font-black tracking-wide text-white mb-8">
+                  {ABSENTEEISM_PPT_SLIDES[pptSlideIndex].title}
+                </h3>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                  <div className="bg-[#121824] border border-white/15 p-8 rounded-2xl shadow-xl">
+                    <h4 className="text-base md:text-lg font-bold text-yellow-400 mb-4 uppercase tracking-wider">
+                      {ABSENTEEISM_PPT_SLIDES[pptSlideIndex].contentLeftHeading}
+                    </h4>
+                    <p className="text-base md:text-lg text-gray-200 leading-relaxed whitespace-pre-line">
+                      {ABSENTEEISM_PPT_SLIDES[pptSlideIndex].contentLeftText}
+                    </p>
+                  </div>
+
+                  <div className="bg-[#1a2333] border border-[#f72585]/40 p-8 rounded-2xl shadow-[inset_0_0_30px_rgba(247,37,133,0.2)]">
+                    <h4 className="text-base md:text-lg font-bold text-pink-400 mb-4 uppercase tracking-wider">
+                      {ABSENTEEISM_PPT_SLIDES[pptSlideIndex].contentRightHeading}
+                    </h4>
+                    <p className="text-base md:text-lg text-gray-100 leading-relaxed whitespace-pre-line">
+                      {ABSENTEEISM_PPT_SLIDES[pptSlideIndex].contentRightText}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-black/70 border border-white/15 px-6 py-5 rounded-xl text-base md:text-lg text-cyan-300 font-bold shadow-lg">
+                {ABSENTEEISM_PPT_SLIDES[pptSlideIndex].footer}
+              </div>
+            </div>
+
+            {/* Modal Navigation Controls */}
+            <div className="flex items-center justify-between border-t border-white/10 pt-6 mt-8">
+              <button
+                disabled={pptSlideIndex === 0}
+                onClick={() => setPptSlideIndex((prev) => Math.max(0, prev - 1))}
+                className={`px-6 py-3 rounded text-sm font-bold uppercase transition-all cursor-pointer ${
+                  pptSlideIndex === 0
+                    ? 'opacity-30 cursor-not-allowed bg-white/5 text-gray-500'
+                    : 'bg-white/10 hover:bg-white/20 text-white'
+                }`}
+              >
+                ◀ PREV SLIDE
+              </button>
+
+              <div className="flex space-x-3">
+                {ABSENTEEISM_PPT_SLIDES.map((_, idx) => (
+                  <div
+                    key={idx}
+                    onClick={() => setPptSlideIndex(idx)}
+                    className={`w-4 h-4 rounded-full cursor-pointer transition-all ${
+                      pptSlideIndex === idx ? 'bg-[#f72585] scale-125 shadow-[0_0_15px_#f72585]' : 'bg-white/20'
+                    }`}
+                  />
+                ))}
+              </div>
+
+              <button
+                disabled={pptSlideIndex === ABSENTEEISM_PPT_SLIDES.length - 1}
+                onClick={() => setPptSlideIndex((prev) => Math.min(ABSENTEEISM_PPT_SLIDES.length - 1, prev + 1))}
+                className={`px-6 py-3 rounded text-sm font-bold uppercase transition-all cursor-pointer ${
+                  pptSlideIndex === ABSENTEEISM_PPT_SLIDES.length - 1
+                    ? 'opacity-30 cursor-not-allowed bg-white/5 text-gray-500'
+                    : 'bg-[#f72585] hover:bg-pink-600 text-black font-extrabold'
+                }`}
+              >
+                NEXT SLIDE ▶
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
+
       {/* Hero Charge Modal VFX */}
       <CharacterMomentOverlay
         heroType={activeHeroMoment}
         onFinish={() => setActiveHeroMoment(null)}
       />
 
-      {/* CINEMATIC ASGARD WORMHOLE WARP TRANSITION & CONTACT VAULT */}
+      {/* Asgard Warp Jump & Contact Terminal */}
       {isWarpingToAsgard && (
         <AsgardWarpTransition onClose={() => setIsWarpingToAsgard(false)} />
       )}

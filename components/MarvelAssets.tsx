@@ -93,271 +93,177 @@ export function InfinityGauntletSVG({
 export function HulkFigureSVG({ className = "w-28 h-28" }: { className?: string }) {
   return (
     <svg
-      viewBox="0 0 200 220"
+      viewBox="0 0 320 220"
       className={className}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      {/* --- EARS (Behind Head) --- */}
-      {/* Left Ear */}
-      <path
-        d="M48 116 C34 116 30 128 32 142 C34 154 44 158 50 156"
-        fill="#74ba33"
-        stroke="#111111"
-        strokeWidth="4"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M38 128 C36 136 40 144 46 146"
-        stroke="#111111"
-        strokeWidth="3.5"
-        strokeLinecap="round"
-      />
+      {/* --- DROP SHADOW / BASELINE --- */}
+      <ellipse cx="160" cy="188" rx="140" ry="8" fill="#000000" opacity="0.4" />
 
-      {/* Right Ear */}
-      <path
-        d="M152 116 C166 116 170 128 168 142 C166 154 156 158 150 156"
-        fill="#74ba33"
-        stroke="#111111"
-        strokeWidth="4"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M162 128 C164 136 160 144 154 146"
-        stroke="#111111"
-        strokeWidth="3.5"
-        strokeLinecap="round"
-      />
+      {/* --- REAR 4-AXLE WHEEL ASSEMBLIES --- */}
+      {/* Wheel 1 (Rear-most) */}
+      <g transform="translate(75, 168)">
+        <circle cx="0" cy="0" r="23" fill="#1e293b" stroke="#111111" strokeWidth="4" />
+        <circle cx="0" cy="0" r="17" fill="#334155" stroke="#111111" strokeWidth="2.5" />
+        <circle cx="0" cy="0" r="10" fill="#f8fafc" stroke="#111111" strokeWidth="2.5" />
+        <circle cx="0" cy="0" r="4.5" fill="#111111" />
+        <circle cx="0" cy="0" r="2" fill="#ffffff" />
+      </g>
 
-      {/* --- HEAD / JAW BASE --- */}
+      {/* Wheel 2 */}
+      <g transform="translate(132, 168)">
+        <circle cx="0" cy="0" r="23" fill="#1e293b" stroke="#111111" strokeWidth="4" />
+        <circle cx="0" cy="0" r="17" fill="#334155" stroke="#111111" strokeWidth="2.5" />
+        <circle cx="0" cy="0" r="10" fill="#f8fafc" stroke="#111111" strokeWidth="2.5" />
+        <circle cx="0" cy="0" r="4.5" fill="#111111" />
+        <circle cx="0" cy="0" r="2" fill="#ffffff" />
+      </g>
+
+      {/* Wheel 3 */}
+      <g transform="translate(195, 168)">
+        <circle cx="0" cy="0" r="23" fill="#1e293b" stroke="#111111" strokeWidth="4" />
+        <circle cx="0" cy="0" r="17" fill="#334155" stroke="#111111" strokeWidth="2.5" />
+        <circle cx="0" cy="0" r="10" fill="#f8fafc" stroke="#111111" strokeWidth="2.5" />
+        <circle cx="0" cy="0" r="4.5" fill="#111111" />
+        <circle cx="0" cy="0" r="2" fill="#ffffff" />
+      </g>
+
+      {/* Wheel 4 (Front Steer) */}
+      <g transform="translate(262, 168)">
+        <circle cx="0" cy="0" r="23" fill="#1e293b" stroke="#111111" strokeWidth="4" />
+        <circle cx="0" cy="0" r="17" fill="#334155" stroke="#111111" strokeWidth="2.5" />
+        <circle cx="0" cy="0" r="10" fill="#f8fafc" stroke="#111111" strokeWidth="2.5" />
+        <circle cx="0" cy="0" r="4.5" fill="#111111" />
+        <circle cx="0" cy="0" r="2" fill="#ffffff" />
+      </g>
+
+      {/* --- CHASSIS FRAME & FUEL TANK --- */}
+      <rect x="155" y="142" width="55" height="18" rx="4" fill="#1e293b" stroke="#111111" strokeWidth="3.5" />
+      <path d="M40 148 L285 148" stroke="#111111" strokeWidth="6" strokeLinecap="round" />
+
+      {/* --- DUMP BED (HARDOX CHARCOAL SLATE WITH 3D PANELS) --- */}
       <path
-        d="M46 100 
-           L44 155 
-           C42 182 48 206 72 212 
-           C86 215 114 215 128 212 
-           C152 206 158 182 156 155 
-           L154 100 
+        d="M30 142 
+           L22 48 
+           L265 32 
+           L258 142 
            Z"
-        fill="#74ba33"
+        fill="#334155"
         stroke="#111111"
         strokeWidth="4.5"
         strokeLinejoin="round"
       />
 
-      {/* --- HAIR (Back mass & Spiky Top) --- */}
+      {/* Dump Bed Ribbed Side Panels */}
       <path
-        d="M44 105 
-           C32 90 24 64 36 42 
-           C38 38 48 44 52 38 
-           C52 30 66 32 72 24 
-           C78 18 88 26 94 18 
-           C102 24 112 18 120 22 
-           C126 26 136 20 144 26 
-           C152 32 160 30 162 40 
-           C168 44 172 58 168 70 
-           C174 76 172 94 164 104 
-           L156 100
-           /* Front Fringe Spikes overlapping forehead */
-           C152 90 146 88 142 96
-           C138 84 130 84 126 96
-           C120 82 112 84 108 94
-           C102 82 92 84 88 98
-           C84 84 74 84 70 94
-           C66 84 56 86 52 98
-           C48 94 46 98 44 105
-           Z"
-        fill="#111111"
-        stroke="#111111"
-        strokeWidth="2"
-      />
-
-      {/* --- FOREHEAD & BROW FURROW WRINKLES --- */}
-      {/* Upper Forehead Arched Creases */}
-      <path
-        d="M74 96 C84 84 94 100 98 110"
-        stroke="#111111"
-        strokeWidth="3"
-        strokeLinecap="round"
-        fill="none"
-      />
-      <path
-        d="M126 96 C116 84 106 100 102 110"
-        stroke="#111111"
-        strokeWidth="3"
-        strokeLinecap="round"
-        fill="none"
-      />
-      {/* Center Glabella Crease */}
-      <path
-        d="M96 112 L96 122 M104 112 L104 122"
-        stroke="#111111"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-      />
-
-      {/* --- EYES & EYEBROWS --- */}
-      {/* Left Eyebrow */}
-      <path
-        d="M52 108 C68 112 86 118 97 126 C88 126 68 120 52 114 Z"
-        fill="#111111"
-      />
-      {/* Left Eye */}
-      <path
-        d="M58 118 C70 120 84 126 92 129 C82 134 68 132 60 125 Z"
-        fill="#ffffff"
-        stroke="#111111"
-        strokeWidth="3"
-        strokeLinejoin="round"
-      />
-      <circle cx="75" cy="125" r="4.5" fill="#111111" />
-
-      {/* Right Eyebrow */}
-      <path
-        d="M148 108 C132 112 114 118 103 126 C112 126 132 120 148 114 Z"
-        fill="#111111"
-      />
-      {/* Right Eye */}
-      <path
-        d="M142 118 C130 120 116 126 108 129 C118 134 132 132 140 125 Z"
-        fill="#ffffff"
-        stroke="#111111"
-        strokeWidth="3"
-        strokeLinejoin="round"
-      />
-      <circle cx="125" cy="125" r="4.5" fill="#111111" />
-
-      {/* Under-Eye Bags / Lines */}
-      <path
-        d="M62 130 C72 136 84 136 90 133"
-        stroke="#111111"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        fill="none"
-      />
-      <path
-        d="M138 130 C128 136 116 136 110 133"
-        stroke="#111111"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        fill="none"
-      />
-
-      {/* --- NOSE --- */}
-      {/* Bridge Lines */}
-      <path
-        d="M93 124 L91 138 L86 142"
-        stroke="#111111"
-        strokeWidth="3"
-        strokeLinecap="round"
-        fill="none"
-      />
-      <path
-        d="M107 124 L109 138 L114 142"
-        stroke="#111111"
-        strokeWidth="3"
-        strokeLinecap="round"
-        fill="none"
-      />
-      {/* Flared Pug Nose Outline */}
-      <path
-        d="M86 142 C92 147 108 147 114 142 C116 146 112 150 100 152 C88 150 84 146 86 142 Z"
-        fill="#5ea324"
-        stroke="#111111"
-        strokeWidth="3"
-        strokeLinejoin="round"
-      />
-      {/* Nostril indentations */}
-      <circle cx="94" cy="146" r="2" fill="#111111" />
-      <circle cx="106" cy="146" r="2" fill="#111111" />
-
-      {/* --- SNARL / CHEEK FOLD LINES --- */}
-      <path
-        d="M82 138 C70 148 54 168 54 190"
+        d="M65 142 L72 45 
+           M105 142 L112 42
+           M145 142 L152 40
+           M185 142 L192 38
+           M225 142 L232 36"
         stroke="#111111"
         strokeWidth="3.5"
-        strokeLinecap="round"
-        fill="none"
-      />
-      <path
-        d="M118 138 C130 148 146 168 146 190"
-        stroke="#111111"
-        strokeWidth="3.5"
-        strokeLinecap="round"
-        fill="none"
       />
 
-      {/* --- ROARING MOUTH & TEETH --- */}
-      {/* Dark Cavity Interior */}
+      {/* VOLVO LOGO TEXT ON DUMP BED */}
+      <text x="142" y="95" fill="#ffffff" fontSize="18" fontFamily="sans-serif" fontWeight="900" letterSpacing="3">VOLVO</text>
+
+      {/* High-Vis Yellow Reflective Side Safety Stripe */}
       <path
-        d="M62 160 
-           C74 154 126 154 138 160 
-           C144 175 142 195 138 202 
-           C124 207 76 207 62 202 
-           C58 195 56 175 62 160 
-           Z"
-        fill="#111111"
+        d="M26 122 L261 106"
+        stroke="#facc15"
+        strokeWidth="6"
+        strokeLinecap="round"
+      />
+      <path
+        d="M26 122 L261 106"
+        stroke="#111111"
+        strokeWidth="6"
+        strokeDasharray="14 14"
+        strokeLinecap="round"
+      />
+
+      {/* Canopy Overhang Hood */}
+      <path
+        d="M190 39 L272 24 L278 40 L190 44 Z"
+        fill="#1e293b"
         stroke="#111111"
         strokeWidth="4"
         strokeLinejoin="round"
       />
 
-      {/* Upper Teeth Row */}
+      {/* --- HYDRAULIC HOIST CYLINDER & EXHAUST STACK --- */}
+      <rect x="202" y="45" width="12" height="95" rx="3" fill="#cbd5e1" stroke="#111111" strokeWidth="3.5" />
+      <rect x="198" y="72" width="20" height="28" rx="2" fill="#94a3b8" stroke="#111111" strokeWidth="3" />
+
+      {/* --- VOLVO FMX CABIN (INDUSTRIAL YELLOW) --- */}
       <path
-        d="M65 160 
-           L135 160 
-           C134 168 132 174 128 174 
-           C125 174 124 168 120 168 
-           C116 168 115 174 111 174 
-           C107 174 106 168 100 168 
-           C94 168 93 174 89 174 
-           C85 174 84 168 80 168 
-           C76 168 75 174 72 174 
-           C68 174 66 168 65 160 
+        d="M210 148 
+           L210 82 
+           C210 68 222 52 240 48 
+           L278 48 
+           L295 90 
+           L295 148 
            Z"
-        fill="#eef4dc"
+        fill="#ffb800"
         stroke="#111111"
-        strokeWidth="2.5"
+        strokeWidth="4.5"
         strokeLinejoin="round"
       />
-      {/* Upper Teeth Separation Lines */}
-      <line x1="80" y1="160" x2="80" y2="168" stroke="#111111" strokeWidth="2" />
-      <line x1="89" y1="160" x2="89" y2="174" stroke="#111111" strokeWidth="2" />
-      <line x1="100" y1="160" x2="100" y2="168" stroke="#111111" strokeWidth="2" />
-      <line x1="111" y1="160" x2="111" y2="174" stroke="#111111" strokeWidth="2" />
-      <line x1="120" y1="160" x2="120" y2="168" stroke="#111111" strokeWidth="2" />
 
-      {/* Lower Teeth Row */}
+      {/* Dark Bumper & Front Grille Assembly */}
       <path
-        d="M66 201 
-           L134 201 
-           C133 192 131 188 126 188 
-           C122 188 121 193 117 193 
-           C113 193 112 188 107 188 
-           C102 188 101 193 96 193 
-           C91 193 90 188 85 188 
-           C80 188 79 193 75 193 
-           C71 193 69 192 66 201 
-           Z"
-        fill="#eef4dc"
+        d="M285 90 L308 95 L308 148 L255 148 Z"
+        fill="#1e293b"
         stroke="#111111"
-        strokeWidth="2.5"
+        strokeWidth="4"
         strokeLinejoin="round"
       />
-      {/* Lower Teeth Separation Lines */}
-      <line x1="75" y1="193" x2="75" y2="201" stroke="#111111" strokeWidth="2" />
-      <line x1="85" y1="188" x2="85" y2="201" stroke="#111111" strokeWidth="2" />
-      <line x1="96" y1="193" x2="96" y2="201" stroke="#111111" strokeWidth="2" />
-      <line x1="107" y1="188" x2="107" y2="201" stroke="#111111" strokeWidth="2" />
-      <line x1="117" y1="193" x2="117" y2="201" stroke="#111111" strokeWidth="2" />
 
-      {/* Bottom Lip & Chin Indent */}
+      {/* Volvo Diagonal Iron Mark Bar on Grille */}
       <path
-        d="M82 208 C94 212 106 212 118 208"
+        d="M288 112 L302 122"
+        stroke="#ffffff"
+        strokeWidth="4"
+        strokeLinecap="round"
+      />
+      <circle cx="295" cy="117" r="5" fill="none" stroke="#ffffff" strokeWidth="2.5" />
+
+      {/* Headlight Cluster */}
+      <rect x="294" y="102" width="10" height="18" rx="2" fill="#00f5d4" stroke="#111111" strokeWidth="2" />
+
+      {/* Windshield */}
+      <path
+        d="M220 80 L258 78 L268 112 L218 112 Z"
+        fill="#cbd5e1"
         stroke="#111111"
         strokeWidth="3.5"
-        strokeLinecap="round"
-        fill="none"
+        strokeLinejoin="round"
       />
+      <path
+        d="M220 80 L258 78 L268 112 L218 112 Z"
+        fill="#0284c7"
+        opacity="0.75"
+      />
+
+      {/* Side Door & Window */}
+      <path
+        d="M214 80 L214 135 L272 135 L272 118 L268 80 Z"
+        fill="#0284c7"
+        stroke="#111111"
+        strokeWidth="3.5"
+        strokeLinejoin="round"
+        opacity="0.85"
+      />
+
+      {/* Side Door Handle & Mirror */}
+      <rect x="258" y="118" width="8" height="4" rx="1" fill="#111111" />
+      <rect x="268" y="65" width="7" height="18" rx="2" fill="#111111" stroke="#111111" strokeWidth="1.5" />
+
+      {/* Rooftop Amber Beacon Lights */}
+      <rect x="222" y="32" width="10" height="8" rx="2" fill="#fbbf24" stroke="#111111" strokeWidth="2" />
+      <rect x="252" y="28" width="12" height="10" rx="2" fill="#fbbf24" stroke="#111111" strokeWidth="2" />
     </svg>
   );
 }
